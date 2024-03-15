@@ -1,5 +1,7 @@
 # Omni-lang Programming Language
 
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
 The Omni programming language is a work-in-progress language based on the style, syntax and features of [Rust](https://rust-lang.org) and [Lisp](https://lisp-lang.org), in order to create something else new and exciting.
 
 This is a project I started as a fun idea in the autumn of 2023, as of this first upload (2024-03-14), I still do not plan on creating the compiler in the forseeable future. For now, I will continue to work on the syntax, features and (make-believe) builtins.
