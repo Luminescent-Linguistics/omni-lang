@@ -8,6 +8,26 @@ If you wish to contribute or to try and create your own compiler for the languag
 
 ---
 
+## The Language
+
+### Syntax
+
+The syntax for Omni is similar to that of Lisp, except that function names are outside the parentheses, meaning the first element in a list will not be the function name. This style is more similar to that of the more popular C-like languages.
+
+A few other exceptions to the syntax are also present, the first of which being that packages and modules are their own entities in code, and so do not require a string representing the relative path to them to be included in another source code file.
+
+&nbsp;
+
+The most common way to start off with learning a language is to make a "Hello, world!" program. An example of how you might do this in Omni is shown below.
+
+```rust
+fun(main () Empty
+    "The main process of the program."
+    print("Hello, world!\n"))
+```
+
+---
+
 ## Contributors
 
 - [Frank Hudson](https://github.com/Frank-Hudson/)
