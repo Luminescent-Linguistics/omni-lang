@@ -28,6 +28,75 @@ fun(main () Empty
     print("Hello, world!\n"))
 ```
 
+### Features
+
+Omni supports most features from both Rust and Lisp. Here, you can find a comprehensive list of the "currently supported"[^1] features.
+
+[^1]: The language is not currently real, so nothing is actually supported.
+
+1. [Variables and Constants](#variables-and-constants)
+2. [Functions](#functions)
+3. [Types](#types)
+4. [Macros](#macros)
+5. [Modules and Packages](#modules-and-packages)
+
+#### Variables and Constants
+
+Variables in Omni are declared with the `let` macro. The `let` macro takes an identifier for the variable name, a type, and optionally a value of the same type as provided for the variable.
+
+```rust
+let(myVariable int 5)
+```
+
+You can also assign late the values of the variables, using the `set` macro.
+
+```rust
+let(myVariable int)
+set(myVariable 5)
+```
+
+These variables are immutable, however, meaning their value cannot be changed. In order to create a mutable variable, you must instead use the `let-mut` macro, and can change the value again using the `set` macro.
+
+```omni
+let-mut(myMutableVariable int 5)
+print-formatted("%d\n", myMutableVariable)
+```
+
+#### Functions
+
+To create a function in Omni, you have already seen in the "Hello, world!" example, you start by calling the `fun` macro. Then, the first argument is the function name (the identifier), followed by the parameters and the return type. Then comes the documentation string, which could be left blank, but at least a short description is recommended, though you should come back later and add it then if you feel it would break your flow. After the documentation string comes the function body, in which you can provide any number of additional operations, provided the final one evaluates to the same type as the function's return type. Additionally, you may exit the function's operations early by using the `return` operation and providing a return value that matches the type the function is meant to return. If the return type is `Empty` or `()`, then any other function or operation that also returns one of those, thereby acting as a procedure, may be called last.
+
+```rust
+fun(early-returning-func (
+        parameter String
+    ) bool
+    "A function that takes in a string parameter and returns true if the string 
+    is equal to \"Hello, world!\", and false if it is not."
+    if(==(parameter1 "Hello, world!")
+        return(true))
+    false)
+```
+
+#### Types
+
+Omni is a strongly- and statically-typed language that allows you to create your own types in the form of `struct`s and `enum`s.
+
+Additionally, the language allows for the making of `trait`s – collections of shared members for implementing on types, including only static members (no properties, only methods and associated constants and types).
+
+#### Macros
+
+Macros, as in Rust and Lisp, are compile-time evaluated operations that allow for metaprogramming, as well as in-language configurations.
+
+Omni's macros are also used in place of some traditional keywords, acting as modifiers to other code.
+
+> _(More to be added)_
+
+#### Modules and Packages
+
+Modules and packages are useful code-sharing tools, and no language is complete without them, in my opinion.
+
+To make use of modules in Omni, you must first create a `*.omni` file, with the name of the module in place of the asterisk (`*`). Then, you can define any constant and static entities (types, functions, actual constants, so on…) inside that file, making sure to mark them as public with the `#(pub)` flag macro
+
 ---
 
 ## Contributors
