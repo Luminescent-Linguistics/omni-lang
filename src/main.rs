@@ -39,12 +39,15 @@ fn main() -> Result<()> {
     // Separate the file path.
     let target_path = Path::new(&args[1]);
     // Attempt to open the file at the path in read-only mode.
-    let mut target_file = File::open(target_path)?;
+    let mut target_file = match File::open(target_path) {
+        Err(why) => return Err(eyre!("Couldn't open the file at the path \"{}\"; \n{}", &args[1], why)),
+        Ok(file) => file,
+    };
     // Read the contents into a string.
     let mut contents = String::new();
-    target_file.read_to_string(&mut contents)?;
-    // TODO: find out how to handle errors with color_eyre in a nested block
-    // (i.e. in a match expression).
+    if let Err(why) = target_file.read_to_string(&mut contents) {
+        return Err(eyre!("Error reading the file {}; \n{}", &args[1], why))
+    }
 
     println!("{contents}");
 
