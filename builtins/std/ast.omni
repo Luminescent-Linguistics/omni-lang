@@ -19,14 +19,24 @@
     You can contact the author at <frank.hudson.v0@gmail.com>.
 "
 
-use(std:ast:(Block Token Value))
-
-"A loose approximation of the backend implementation for `mac`."
 #(pub)
-define-keyword-function(mac (Token:ident (union(Token (Token))) (Block) opt(Token:ltrl:str)))
+enum-type-tree(Token
+    "" (
+    (expr ())
+    (ident ())
+    (ltrl (
+        (block ())
+        (int ())
+        (str ())
+        #(enum-type-tree:new)
+    ))
+))
 
 #(pub)
-mac(fun (Token:ident (Token:ident Token:type)) (Block) opt(Token:ltrl:str)))
+struct(Block
+    ""
+    (Series:of<Token>))
 
+"A loose approximation of the backend implementation of `Value`."
 #(pub)
-mac(new-type (Token:ident Value:{size union(usize std:mem:size:Unsized)}))
+define-value(Value ())

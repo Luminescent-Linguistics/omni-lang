@@ -22,7 +22,7 @@
 #(pub)
 struct(Size
     "A structure for representing the size of a control or UI element."
-    { width: int, height: int })
+    { width int32, height int32 })
 
 #(pub)
 struct(Window
@@ -31,9 +31,9 @@ struct(Window
     Uses `std:sys:os:diff` and `std:sys:arc:diff` to differentiate operating 
     systems and machine architecture for a cross-compatible UI engine."
     {
-        size: Size,
+        size Size,
         "A representation of the window's size."
-        position: WindowPosition,
+        position WindowPosition,
         "A representation of the window's default position on the screen after 
         launch."
     })

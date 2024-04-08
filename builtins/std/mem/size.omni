@@ -19,14 +19,7 @@
     You can contact the author at <frank.hudson.v0@gmail.com>.
 "
 
-use(std:ast:(Block Token Value))
-
-"A loose approximation of the backend implementation for `mac`."
 #(pub)
-define-keyword-function(mac (Token:ident (union(Token (Token))) (Block) opt(Token:ltrl:str)))
-
-#(pub)
-mac(fun (Token:ident (Token:ident Token:type)) (Block) opt(Token:ltrl:str)))
-
-#(pub)
-mac(new-type (Token:ident Value:{size union(usize std:mem:size:Unsized)}))
+struct(Unsized
+    "A unit type to represent the size of unsized types in the upper low level 
+    (no size information exists for these types in machine code).")
