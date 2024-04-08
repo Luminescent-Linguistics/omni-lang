@@ -1,15 +1,87 @@
 use(
-    std:ui:(
-        Size
-        Window
-        WindowPosition
+    std:(
+        io
+        ui:(
+            Size
+            Window
+            WindowPosition
+            Element
+        )
     )
 )
 
+#(override-idents)
+enum(Operator (
+    +
+    -
+    *
+    /
+    %
+    ^
+    None
+))
+
+fun(calculate (emitter Element eventargs std:dyn:dynstruct) Empty
+    match(
+        Operation:+ +(get(eventargs ))
+    )
+    get(emitter attributes operation)
+)
+
+const(                        ||| "Normal" dimensions
+    WINDOW-WIDTH usize 512    ||| 896
+    WINDOW-HEIGHT usize 640   ||| 512
+    WINDOW-PADDING usize 20
+    CALCULATOR-SCREEN-WIDTH usize -(WINDOW-WIDTH *(WINDOW-PADDING 2))
+    CALCULATOR-SCREEN-HEIGHT usize 150
+    CALCULATOR-BUTTON-DIMENSION usize 40
+)
+
 fun(main () Empty
-    "The main entrypoint."
-    comment("Immediate setup and start (no assignment) of a window.")
-    Window:setup-start(std:dyn:dynstruct:{
-        size = Size:{ width = 400, height = 200 },
+    set(window Window:setup(std:dyn:dynstruct:{
+        size = Size:{ width = WINDOW-WIDTH, height = WINDOW-HEIGHT },
         position = WindowPosition:Centre,
     }))
+    set((window maximise-button enabled) false)
+
+    repeat-set+then(button{i} i range-inclus(0 9)
+        Element:button(std:dyn:dynstruct:{
+            text = isize-to-string(i),
+            size = Size:{ width = CALCULATOR-BUTTON-DIMENSION, height = CALCULATOR-BUTTON-DIMENSION },
+            position = WindowPosition:Coord:{ (x y) = match(i (
+                    0 (
+                        -(/(get(window size width) 2) /(CALCULATOR-BUTTON-DIMENSION 2))
+                        +(CALCULATOR-SCREEN-HEIGHT *(WINDOW-PADDING 2) *(CALCULATOR-BUTTON-DIMENSION 3))
+                    )
+                    1 ()
+                )
+            ) },
+            onclick = lambda(() i),
+        })
+        lamda((btn) Window:grab(btn))
+    )
+    set(button+ Element:button(std:dyn:dynstruct:{
+        text = "+",
+        onclick = calculate,
+        eventargs = std:dyn:dynstruct:{ cache = ref(calculator-cache), screen = ref(output-current) },
+        attributes = std:dyn:dynstruct:{ operation = Operation:+ }
+    }))
+    =(button- Element:button(std:dyn:dynstruct:{
+        text = "-",
+        onclick = calculate,
+        eventargs = std:dyn:dynstruct:{ cache = ref(calculator-cache), screen = ref(output-current) },
+        attributes = std:dyn:dynstruct:{ operation = Operation:- }
+    }))
+    =(button* Element:button(std:dyn:dynstruct:{
+        text = "*",
+        onclick = calculate,
+        eventargs = std:dyn:dynstruct:{ cache = ref(calculator-cache), screen = ref(output-current) },
+        attributes = std:dyn:dynstruct:{ operation = Operation:* }
+    }))
+    =(button/ Element:button(std:dyn:dynstruct:{
+        text = "/",
+        onclick = calculate,
+        eventargs = std:dyn:dynstruct:{ cache = ref(calculator-cache), screen = ref(output-current) },
+        attributes = std:dyn:dynstruct:{ operation = Operation:/ }
+    }))
+)
