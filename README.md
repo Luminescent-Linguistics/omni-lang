@@ -1,6 +1,6 @@
 # Omni-lang Programming Language
 
-![GitHub License](https://img.shields.io/github/license/Frank-Hudson/omni-lang)
+![GitHub License](https://img.shields.io/github/license/Luminescent-Linguistics/omni-lang)
 
 The Omni programming language is a work-in-progress language based on the style, syntax and features of [Rust](https://rust-lang.org) and [Lisp](https://lisp-lang.org), in order to create something else new and exciting.
 
