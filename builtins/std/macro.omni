@@ -26,7 +26,9 @@ use(std:ast:(Block Token Value))
 define-keyword-function(mac (Token:ident (union(Token (Token))) (Block) opt(Token:ltrl:str)))
 
 #(pub)
-mac(fun (Token:ident (Token:ident Token:type)) (Block) opt(Token:ltrl:str)))
+mac(fun ((Token:ident (Token:ident Token:type)) Block opt(Token:ltrl:str))
+    //("-- implementation of `fun` --")
+)
 
 #(pub)
 mac(new-type (Token:ident Value:{size union(usize std:mem:size:Unsized)}))
