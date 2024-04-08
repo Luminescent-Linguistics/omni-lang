@@ -1,0 +1,15 @@
+use(
+    std:ui:(
+        Size
+        Window
+        WindowPosition
+    )
+)
+
+fun(main () Empty
+    "The main entrypoint."
+    comment("Immediate setup and start (no assignment) of a window.")
+    Window:setup-start(std:dyn:dynstruct:{
+        size = Size:{ width = 400, height = 200 },
+        position = WindowPosition:Centre,
+    }))

@@ -1,0 +1,26 @@
+use-internal(stand:io:console)
+use-internal(web:sub-use(
+    err:Result
+    html
+))
+
+set(server web:server:start(
+    localhost
+    3030
+    web:server:attach-console(console)
+))
+
+web:webpage("index"
+    html:head(
+        set(title "Home")
+    ),
+    html:body(
+        html:h1("Hello, World!"),
+    )
+)
+
+fn(main () Result
+    docs:default:main-entrypoint
+    console:log:info(concat("Starting server: " server.get-debug-string()))
+    return(Result:AllGood())
+)
