@@ -113,7 +113,7 @@ The [license](./LICENSE) for this project is the [GNU General Public License, Ve
 ## Copyright
 
 > Omni-lang, a general purpose programming language.
-> Copyright (C) 2024  Frank Hudson
+> Copyright (C) 2024  Kira Hudson
 >
 > This program is free software: you can redistribute it and/or modify
 > it under the terms of the GNU General Public License as published by

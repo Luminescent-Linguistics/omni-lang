@@ -3,7 +3,6 @@ use library:[
         alias-primitive
         type-primitive
     ]
-
 ]
 
 #pub type-primitive int8 numeric(8-bit)
