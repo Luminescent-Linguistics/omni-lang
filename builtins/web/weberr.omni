@@ -18,3 +18,8 @@
 
     You can contact the author at <frank.hudson.v0@gmail.com>.
 "
+
+use lib:http:HTTPCode
+
+#pub
+alias WebResult std:err:Result:(HTTPCode HTTPCode)

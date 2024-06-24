@@ -1,17 +1,17 @@
-use(
-    std:(
-        io
-        ui:(
-            Size
-            Window
-            WindowPosition
-            Element
-        )
-    )
-)
+use std:[
+    ;;;;collections:HashMap
+    dyn:dynstruct
+    io
+    ui:[
+        Size
+        Window
+        WindowPosition
+        Element
+    ]
+]
 
-#(override-idents)
-enum(Operator (
+#override(atoms)
+enum Operator [
     +
     -
     *
@@ -19,47 +19,57 @@ enum(Operator (
     %
     ^
     None
-))
+]
 
-fun(calculate (emitter Element eventargs std:dyn:dynstruct) Empty
-    match(
-        Operation:+ +(get(eventargs ))
-    )
-    get(emitter attributes operation)
-)
+fun calculate [emitter Element, eventargs dynstruct] Empty
+    (match (get (get emitter :attributes) "operator")
+        Operation:+ +(get(eventargs )))
 
-const(                        ||| "Normal" dimensions
-    WINDOW-WIDTH usize 512    ||| 896
-    WINDOW-HEIGHT usize 640   ||| 512
-    WINDOW-PADDING usize 20
-    CALCULATOR-SCREEN-WIDTH usize -(WINDOW-WIDTH *(WINDOW-PADDING 2))
-    CALCULATOR-SCREEN-HEIGHT usize 150
-    CALCULATOR-BUTTON-DIMENSION usize 40
-)
+(const [
+    ; "Normal" dimensions
+    WINDOW-WIDTH usize 512,    ; 896
+    WINDOW-HEIGHT usize 640,   ; 512
+    WINDOW-PADDING usize 20,
+    CALCULATOR-SCREEN-WIDTH usize -(WINDOW-WIDTH *(WINDOW-PADDING 2)),
+    CALCULATOR-SCREEN-HEIGHT usize 150,
+    CALCULATOR-BUTTON-DIMENSION usize 40,
+])
 
-fun(main () Empty
-    set(window Window:setup(std:dyn:dynstruct:{
-        size = Size:{ width = WINDOW-WIDTH, height = WINDOW-HEIGHT },
+(fun main () Empty ""
+    (set window (Window:setup (std:dyn:dynstruct {
+        size = Size { width = WINDOW-WIDTH, height = WINDOW-HEIGHT },
         position = WindowPosition:Centre,
-    }))
-    set((window maximise-button enabled) false)
+    })))
+    (set window :maximise-button :enabled false)
 
-    repeat-set+then(button{i} i range-inclus(0 9)
-        Element:button(std:dyn:dynstruct:{
-            text = isize-to-string(i),
-            size = Size:{ width = CALCULATOR-BUTTON-DIMENSION, height = CALCULATOR-BUTTON-DIMENSION },
-            position = WindowPosition:Coord:{ (x y) = match(i (
+    ; repeatedly set                             button{i} (button1, button2, ...)
+    ; for i in inclusive range (..=) 0 to 9
+    ; then...
+    (repeat-set-+then i (..= 0 9) (lazy-fmt-atom button{i})
+        (Element:button {
+            ; each button with text "{i}",
+            text = to-string i,
+            ; x, y size the earlier defined calculator button dimension constant
+            size = Size { width = CALCULATOR-BUTTON-DIMENSION, height = CALCULATOR-BUTTON-DIMENSION },
+            ; x, y position 
+            position = WindowPosition:Coord { (x y) = (match i [
                     0 (
-                        -(/(get(window size width) 2) /(CALCULATOR-BUTTON-DIMENSION 2))
-                        +(CALCULATOR-SCREEN-HEIGHT *(WINDOW-PADDING 2) *(CALCULATOR-BUTTON-DIMENSION 3))
-                    )
-                    1 ()
-                )
+                        (- (/ (get window :size :width) 2)
+                           (/ CALCULATOR-BUTTON-DIMENSION 2))
+                        (+ CALCULATOR-SCREEN-HEIGHT
+                           (* WINDOW-PADDING 2)
+                           (* CALCULATOR-BUTTON-DIMENSION 3))
+                    ),
+                    ;; TODO: Handle case i = 1
+                    1 (),
+                    ;; TODO: Handle cases i = 2..=9
+                ]
             ) },
-            onclick = lambda(() i),
+            onclick = (lambda [] i),
         })
-        lamda((btn) Window:grab(btn))
-    )
+        ; ...then make the window grab the current button{i}
+        (lamda [btn] (Window:grab btn)))
+
     set(button+ Element:button(std:dyn:dynstruct:{
         text = "+",
         onclick = calculate,

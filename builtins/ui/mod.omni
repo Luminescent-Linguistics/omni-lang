@@ -1,4 +1,4 @@
-"   Omni-lang std, the standard library for the Omni programming language.
+"   Omni-lang ui-lib, the built-in UI library for the Omni programming language.
     Copyright (C) 2024  Frank Hudson
 
     This program is free software: you can redistribute it and/or modify
@@ -17,14 +17,25 @@
 
     You can contact the author at <frank.hudson.v0@gmail.com>."
 
-mod [
-    ast
-    doc
-    dyn
-    err
-    io
-    lib
-    macro
-    mem
-    sys
-]
+#pub
+struct Size
+    "A structure for representing the size of a control or UI element."
+    {
+        width int32,
+        height int32,
+    }
+
+#pub
+struct Window
+    "A structure for creating and managing a window.
+    
+    Uses `std:sys:os:diff` and `std:sys:arc:diff` to differentiate operating 
+    systems and machine architecture for a cross-compatible UI engine."
+
+    {
+        size Size,
+        "A representation of the window's size."
+        position WindowPosition,
+        "A representation of the window's default position on the screen after 
+        launch."
+    }

@@ -1,5 +1,4 @@
-"
-    Omni-lang builtins, the builtin libraries for the Omni programming language.
+"   Omni-lang web-lib, the built-in web library for the Omni programming language.
     Copyright (C) 2024  Frank Hudson
 
     This program is free software: you can redistribute it and/or modify
@@ -16,18 +15,13 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 
-    You can contact the author at <frank.hudson.v0@gmail.com>.
-"
+    You can contact the author at <frank.hudson.v0@gmail.com>."
 
-#(pub)
-struct(Server {
-    host-address: string,
-    port: int,
-    console: std:dyn:dyntrait(IsConsole),
-})
-
-#(pub)
-fun(start () Server)
-
-#(pub)
-fun(attach-console <T: std:io:IsConsole> (console T) ServerConsole)
+mod [
+    css
+    html
+    http
+    js
+    server
+    weberr
+]

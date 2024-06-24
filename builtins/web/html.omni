@@ -1,0 +1,142 @@
+use std:[
+    collections:HashMap
+    dyn:dyntrait
+]
+use lib:css:[
+    fonts:[FontFamily FontStyle FontWeight]
+    Layout
+]
+
+#pub
+trait HTMLNode [
+    (fun children [self #ref(Self)] HTMLNodeList)
+
+    (fun add-child [self #mutref(Self), child dyntrait(HTMLNode)] HTMLNodeList)
+]
+
+#pub
+struct HTMLNodeList
+    "A newtype surrounding a list of HTML Nodes"
+    list(dyntrait(HTMLNode))
+
+#pub
+struct head
+    "The `<head>` element of an HTML document."
+    {
+        title String,
+        innerHTML HTMLNodeList,
+    }
+
+impl head HTMLNode [
+    (impl-fun children [self #ref(Self)] (get self :innerHTML))
+
+    (impl-fun add-child [self #mutref(Self), child dyntrait(HTMLNode)]
+        (set self :innerHTML (concat (get self :innerHTML) [child])))
+]
+
+#pub
+struct body
+    "The `<body>` element of an HTML document."
+    {
+        innerHTML HTMLNodeList,
+    }
+
+impl body HTMLNode [
+    (impl-fun children [self #ref(Self)] (get self :innerHTML))
+
+    (impl-fun add-child [self #mutref(Self), child dyntrait(HTMLNode)]
+        (set self :innerHTML (concat (get self :innerHTML) [child])))
+]
+
+impl body [
+    (fun new [innerHTML HTMLNodeList] Self
+        "Instantiate a new instance of a body element using an innerHTML list."
+        Self {
+            innerHTML,
+        })
+]
+
+#pub
+struct HTMLElement
+    "HTML element.
+    
+    This is an element."
+    {
+        id Opt(String),
+        innerHTML HTMLNodeList,
+        properties HashMap(String String),
+    }
+
+impl HTMLElement HTMLNode [
+    (impl-fun children [self #ref(Self)] (get self :innerHTML))
+
+    (impl-fun add-child [self #mutref(Self), child dyntrait(HTMLNode)]
+        (set self :innerHTML (concat (get self :innerHTML) [child])))
+]
+
+impl HTMLElement [
+    (fun new [id Opt(String), innerHTML HTMLNodeList]
+        "Instantiate a new instance of an HTML Element struct using an id an 
+        innerHTML list."
+        Self {
+            id,
+            innerHTML,
+            properties = HashMap:new,
+        })
+]
+
+#pub
+struct DynamicHTMLElement
+    "Dynamically-tagged HTML element.
+    
+    This is an element with a tag-type determined at the point of construction, 
+    but remains the same throughout its duration."
+    {
+        tag String,
+        element HTMLElement,
+    }
+
+impl DynamicHTMLElement HTMLNode [
+    (impl-fun children [self #ref(Self)] (get self :element :innerHTML))
+
+    (impl-fun add-child [self #mutref(Self), child dyntrait(HTMLNode)]
+        (set self :element :innerHTML (concat (get self :element :innerHTML) [child])))
+]
+
+impl DynamicHTMLElement [
+    (fun new [tag String, id Opt(String), innerHTML HTMLNodeList]
+        "Instantiate a new instance of a dynamic HTML element using the 
+        element's tag, id and innerHTML node list."
+        Self {
+            tag,
+            element = (HTMLElement:new id innerHTML),
+        })
+]
+
+#pub
+enum HTMLTag [
+    a [HTMLElement],
+    article [HTMLElement],
+    b [HTMLElement],
+    code [HTMLElement],
+    div [HTMLElement],
+    em [HTMLElement],
+    form [HTMLElement],
+    h1 [HTMLElement],
+    h2 [HTMLElement],
+    h3 [HTMLElement],
+    h4 [HTMLElement],
+    h5 [HTMLElement],
+    h6 [HTMLElement],
+    i [HTMLElement],
+    li [HTMLElement],
+    p [HTMLElement],
+    pre [HTMLElement],
+    ol [HTMLElement],
+    span [HTMLElement],
+    table [HTMLElement],
+    tc [HTMLElement],
+    th [HTMLElement],
+    tr [HTMLElement],
+    ul [HTMLElement],
+]

@@ -19,21 +19,22 @@
     You can contact the author at <frank.hudson.v0@gmail.com>.
 "
 
-#(pub)
-struct(Size
-    "A structure for representing the size of a control or UI element."
-    { width int32, height int32 })
+#pub
+struct Server
+    ""
+    [
+        host-address String,
+        port Int,
+        console Rc(std:dyn:Is(Console)),
+    ]
 
-#(pub)
-struct(Window
-    "A structure for creating and managing a window.
-    
-    Uses `std:sys:os:diff` and `std:sys:arc:diff` to differentiate operating 
-    systems and machine architecture for a cross-compatible UI engine."
-    {
-        size Size,
-        "A representation of the window's size."
-        position WindowPosition,
-        "A representation of the window's default position on the screen after 
-        launch."
-    })
+impl Server [
+    #pub
+    (fun start [self #&(Self)] Self
+        "")
+
+    #pub
+    (fun attach-console(T std:io:Console) [self #&mut(Self), console Rc(T)] ServerConsole
+        ""
+        (set self :console console))
+]

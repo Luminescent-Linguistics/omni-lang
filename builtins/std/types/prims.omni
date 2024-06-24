@@ -1,0 +1,26 @@
+use library:[
+    ast:[
+        alias-primitive
+        type-primitive
+    ]
+
+]
+
+#pub type-primitive int8 numeric(8-bit)
+#pub type-primitive int16 numeric(16-bit)
+#pub type-primitive int32 numeric(32-bit)
+#pub type-primitive int64 numeric(64-bit)
+#pub type-primitive int128 numeric(128-bit)
+
+#pub
+alias int int32
+
+#pub
+type-primitive char alias-primitive(int8)
+
+
+#pub
+type-primitive bool(T) enumlike((f [T, T] T)) [
+    [false [(lambda [a T, b T] b)]]
+    [true [(lambda [a T, b T] a)]]
+]
