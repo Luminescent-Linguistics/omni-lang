@@ -3,7 +3,7 @@ hanger-struct Log
     "A \"hanger\" struct with various functions and other items to do with a log
      \"hanging\" from it."
 
-hang Log [
+impl Log [
     (fun info (message String) Empty
         "Log a message at the `info` level."
         std:err:NotImplemented)
