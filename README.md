@@ -12,6 +12,8 @@ If you wish to contribute or to try and create your own compiler for the languag
 
 ## The Language
 
+[Specification](./docs/specification.md)
+
 ### Syntax
 
 The syntax for Omni is similar to that of Lisp, except that function names are outside the parentheses, meaning the first element in a list will not be the function name. This style is more similar to that of the more popular C-like languages.
@@ -22,10 +24,10 @@ A few other exceptions to the syntax are also present, the first of which being 
 
 The most common way to start off with learning a language is to make a "Hello, world!" program. An example of how you might do this in Omni is shown below.
 
-```rust
-fun(main () Empty
+```clojure
+(fun main [] Empty
     "The main process of the program."
-    print("Hello, world!\n"))
+    (print "Hello, world!\n"))
 ```
 
 ### Features
@@ -44,36 +46,35 @@ Omni supports most features from both Rust and Lisp. Here, you can find a compre
 
 Variables in Omni are declared with the `let` macro. The `let` macro takes an identifier for the variable name, a type, and optionally a value of the same type as provided for the variable.
 
-```rust
-let(myVariable int 5)
+```clojure
+(let myVariable int 5)
 ```
 
 You can also assign late the values of the variables, using the `set` macro.
 
-```rust
-let(myVariable int)
-set(myVariable 5)
+```clojure
+(let myVariable int)
+(set myVariable 5)
 ```
 
 These variables are immutable, however, meaning their value cannot be changed. In order to create a mutable variable, you must instead use the `let-mut` macro, and can change the value again using the `set` macro.
 
-```omni
-let-mut(myMutableVariable int 5)
-print-formatted("%d\n", myMutableVariable)
+```clojure
+(let-mut myMutableVariable int 5)
+(print-fmtd "%d\n", myMutableVariable)
 ```
 
 #### Functions
 
 To create a function in Omni, you have already seen in the "Hello, world!" example, you start by calling the `fun` macro. Then, the first argument is the function name (the identifier), followed by the parameters and the return type. Then comes the documentation string, which could be left blank, but at least a short description is recommended, though you should come back later and add it then if you feel it would break your flow. After the documentation string comes the function body, in which you can provide any number of additional operations, provided the final one evaluates to the same type as the function's return type. Additionally, you may exit the function's operations early by using the `return` operation and providing a return value that matches the type the function is meant to return. If the return type is `Empty` or `()`, then any other function or operation that also returns one of those, thereby acting as a procedure, may be called last.
 
-```rust
-fun(early-returning-func (
+```clojure
+(fun early-returning-function [
         parameter String
-    ) bool
+    ] bool
     "A function that takes in a string parameter and returns true if the string 
     is equal to \"Hello, world!\", and false if it is not."
-    if(==(parameter1 "Hello, world!")
-        return(true))
+    (if (== parameter1 "Hello, world!") (set return true))
     false)
 ```
 
@@ -95,7 +96,7 @@ Omni's macros are also used in place of some traditional keywords, acting as mod
 
 Modules and packages are useful code-sharing tools, and no language is complete without them, in my opinion.
 
-To make use of modules in Omni, you must first create a `*.omni` file, with the name of the module in place of the asterisk (`*`). Then, you can define any constant and static entities (types, functions, actual constants, so on…) inside that file, making sure to mark them as public with the `#(pub)` flag macro
+To make use of modules in Omni, you must first create a `*.omni` file, with the name of the module in place of the asterisk (`*`). Then, you can define any constant and static entities (types, functions, actual constants, so on…) inside that file, making sure to mark them as public with the `#pub` flag macro
 
 ---
 
@@ -107,7 +108,7 @@ To make use of modules in Omni, you must first create a `*.omni` file, with the 
 
 ## License
 
-The license for this project is the [GNU General Public License, Version 3.0](https://www.gnu.org/licenses/gpl-3.0).
+The [license](./LICENSE) for this project is the [GNU General Public License, Version 3.0](https://www.gnu.org/licenses/gpl-3.0).
 
 ## Copyright
 
