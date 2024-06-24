@@ -102,7 +102,7 @@ To make use of modules in Omni, you must first create a `*.omni` file, with the 
 
 ## Contributors
 
-- [Frank Hudson](https://github.com/Frank-Hudson/)
+- Kira Hudson
 
 ---
 
